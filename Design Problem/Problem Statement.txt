@@ -1,0 +1,21 @@
+Problem Statement:
+Consider you have a folder A which contains files of different formats (.csv, pdf, etc). You need to write two main components, let's say component A and component B. Below are the details of operations performed by these components
+Component A:
+Keep polling Folder A
+Build XML using this CSV (It could be pdf as well)
+Send XML to 2nd Component
+Getting Response back in XML
+Storing that Response in some Folder
+Extra BONUS: Convert response XML to CV and then store it in folder
+Move processed file to another file
+
+Component B:
+It will accept XMI
+It will translate this XML to some Java Object
+Some processing on top of it
+Create Response XML by using processed data send back the response
+
+For Example:
+Folder A contains one csv file containing students data. You need to poll that folder and get that csy file in the component A.
+Convert that cv to xml mappings
+and send it to component B for processing. Then component B will process that cay again send processed xl back to the first component. Then the first component will directly save that file to a specific output folder or convert it back to esy and then store it in the output folder. Since this file is processed we should not see that file in the input folder. If the file format is not supported, move that file to the discarded folder.

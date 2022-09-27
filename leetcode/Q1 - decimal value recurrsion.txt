@@ -1,0 +1,92 @@
+Question - 
+
+Given two integers representing the numerator and denominator of a fraction, return the fraction in string format.
+
+If the fractional part is repeating, enclose the repeating part in parentheses.
+
+If multiple answers are possible, return any of them.
+
+It is guaranteed that the length of the answer string is less than 104 for all the given inputs.
+
+ 
+
+Example 1:
+
+Input: numerator = 1, denominator = 2
+Output: "0.5"
+Example 2:
+
+Input: numerator = 2, denominator = 1
+Output: "2"
+Example 3:
+
+Input: numerator = 4, denominator = 333
+Output: "0.(012)"
+ 
+
+Constraints:
+
+-2^31 <= numerator, denominator <= 2^31 - 1
+denominator != 0
+
+
+Answer Code - 
+
+class Solution {
+    public String fractionToDecimal(int numerator, int denominator) {
+         StringBuilder result = new StringBuilder();
+    String sign = (numerator < 0 == denominator < 0 || numerator == 0) ? "" : "-";
+    long num = Math.abs((long) numerator);
+    long den = Math.abs((long) denominator);
+    result.append(sign);
+    result.append(num / den);
+    long remainder = num % den;
+    if (remainder == 0)
+        return result.toString();
+    result.append(".");
+    HashMap hashMap = new HashMap();
+    while (!hashMap.containsKey(remainder)) {
+        hashMap.put(remainder, result.length());
+       // System.out.println(result.toString());
+        result.append(10 * remainder / den);
+      //  System.out.println(result.toString() +" " +10*remainder/den +" "+ remainder);
+        remainder = 10 * remainder % den;
+    }
+    System.out.println(hashMap);
+    int index = (int) hashMap.get(remainder);
+  //  System.out.println("Value before " + result.toString());
+    result.insert(index, "(");
+   // System.out.println("Value after " + result.toString());
+    result.append(")");
+    return result.toString();
+    }
+}
+
+
+
+Very tricky edge cases
+
+Input
+-1
+-2147483648
+stdout
+{843055104=36, 1988100096=38, 553648128=40, 1241513984=42, 1677721600=44, 1744830464=46, 268435456=48, 0=54, 536870912=50, 1073741824=52, 1=2, 1874919424=25, 616988672=23, 10=3, 1569325056=27, 1410065408=13, 1000000=8, 10000=6, 1661992960=32, 10000000=9, 1000000000=11, 1587544064=34, 100000=7, 100=4, 660865024=29, 1420103680=17, 1000=5, 166199296=31, 1316134912=19, 100000000=10, 1215752192=15, 276447232=21}
+
+Output
+"0.000000000-4-6-5-6-6-1-2-8-7-30-7-7-3-9-2-5-7-8-1-2-5"
+Expected
+"0.0000000004656612873077392578125"
+
+- Thats why I decided to use long and negative checks for input
+
+
+
+Input:
+1
+2
+Output:
+"0.5(0)"
+Expected:
+"0.5"
+
+- Thats why I am using last replace call to "(0)" with "".
