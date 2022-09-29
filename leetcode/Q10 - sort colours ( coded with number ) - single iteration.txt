@@ -1,0 +1,94 @@
+Question
+
+75. Sort Colors
+Medium
+
+12306
+
+462
+
+Add to List
+
+Share
+Given an array nums with n objects colored red, white, or blue, sort them in-place so that objects of the same color are adjacent, with the colors in the order red, white, and blue.
+
+We will use the integers 0, 1, and 2 to represent the color red, white, and blue, respectively.
+
+You must solve this problem without using the library's sort function.
+
+ 
+
+Example 1:
+
+Input: nums = [2,0,2,1,1,0]
+Output: [0,0,1,1,2,2]
+Example 2:
+
+Input: nums = [2,0,1]
+Output: [0,1,2]
+ 
+
+Constraints:
+
+n == nums.length
+1 <= n <= 300
+nums[i] is either 0, 1, or 2.
+
+
+Answer
+
+bubble sort (4 MS)
+
+class Solution {
+    public void sortColors(int[] nums) {
+        
+        if(nums.length == 1)
+           return;
+        int temp = 0;
+        boolean isSwapped;
+        int len = nums.length;
+        for(int i=0;i<len-1;i++){
+            isSwapped = false;
+            for(int j=0;j<len-i-1;j++){
+            if(nums[j]>nums[j+1]){
+                    temp = nums[j];
+                    nums[j] = nums[j+1];
+                    nums[j+1] = temp;
+                    isSwapped = true;
+            }
+        }
+ 
+        if(!isSwapped)
+          break;
+        }
+    }
+}
+
+
+optimized solution (1 MS)
+ 
+class Solution {
+    public void sortColors(int[] nums) {
+        
+        if(nums.length == 1)
+           return;
+        
+        int zeroCount = 0;
+        int oneCount = 0;
+        for(int i=0;i<nums.length;i++){
+            if(nums[i] == 0)
+                zeroCount++;
+            else if(nums[i] == 1)
+                oneCount++;
+        }
+        for(int i=0;i<nums.length;i++){
+            while(zeroCount-- > 0)
+                nums[i++] = 0;
+            while(oneCount-- > 0)
+                nums[i++] = 1;
+            if(i == nums.length)
+                break;
+            nums[i] = 2; 
+        }
+    }
+}
